@@ -27,7 +27,8 @@ self.addEventListener("fetch", (e) => {
         try {
             const response = await fetch(e.request);
             const cache = await caches.open('v8');
-            cache.put(e.request, response.clone());
+            cache.put(e.request,
+                response.clone() /*Make sure to call .clone() on response because each response can only be used once!*/ );
             return response;
         } catch (e) {
             return await caches.match(e.request)
