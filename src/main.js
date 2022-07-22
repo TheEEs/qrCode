@@ -37,7 +37,9 @@ app.mount('#app')
 
 if ('serviceWorker' in navigator) {
     console.log(`${process.env.BASE_URL}service-worker.js`);
-    navigator.serviceWorker.register(`${process.env.BASE_URL}service-worker.js`).then((registration) => {
+    navigator.serviceWorker.register(`${process.env.BASE_URL}service-worker.js`, {
+        scope: '/'
+    }).then((registration) => {
         if (registration.installing) {
             console.log("Service worker is installing");
         } else if (registration.waiting) {

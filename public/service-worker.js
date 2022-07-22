@@ -22,16 +22,19 @@ self.addEventListener("activate", e => {
 
 
 
-self.addEventListener("fetch", (e) => {
-    e.respondWith((async () => {
-        try {
-            const response = await fetch(e.request);
-            const cache = await caches.open('v8');
-            cache.put(e.request,
-                response.clone() /*Make sure to call .clone() on response because each response can only be used once!*/ );
-            return response;
-        } catch (e) {
-            return await caches.match(e.request)
-        }
-    })())
+self.addEventListener("fetch", event => {
+    const request = event.request;
+    console.log(request)
+    event.respondWith(
+        caches.match(request).then((cached_result) => {
+            if (cached_result) return cached_result;
+            return fetch(request).then(response => {
+                const copy = response.clone()
+                event.waitUntil(caches.open(CACHE_VERSION).then(cache => {
+                    return cache.put(request, copy);
+                }))
+                return response;
+            })
+        })
+    )
 })
