@@ -1,0 +1,83 @@
+{
+    "width": 500,
+    "height": 500,
+    "margin": 0,
+    "qrOptions": {
+        "typeNumber": "0",
+        "mode": "Byte",
+        "errorCorrectionLevel": "H"
+    },
+    "imageOptions": {
+        "hideBackgroundDots": true,
+        "imageSize": 0.4,
+        "margin": 4
+    },
+    "dotsOptions": {
+        "type": "square",
+        "color": "#2c3e50"
+    },
+    "backgroundOptions": {
+        "color": "#ffffff"
+    },
+    "image": "10cc19bd484118dbcd0a7886a38ceddc.png",
+    "dotsOptionsHelper": {
+        "colorType": {
+            "single": true,
+            "gradient": false
+        },
+        "gradient": {
+            "linear": true,
+            "radial": false,
+            "color1": "#6a1a4c",
+            "color2": "#6a1a4c",
+            "rotation": "0"
+        }
+    },
+    "cornersSquareOptions": {
+        "type": "square",
+        "color": "#2c3e50"
+    },
+    "cornersSquareOptionsHelper": {
+        "colorType": {
+            "single": true,
+            "gradient": false
+        },
+        "gradient": {
+            "linear": true,
+            "radial": false,
+            "color1": "#000000",
+            "color2": "#000000",
+            "rotation": "0"
+        }
+    },
+    "cornersDotOptions": {
+        "type": "",
+        "color": "#2c3e50"
+    },
+    "cornersDotOptionsHelper": {
+        "colorType": {
+            "single": true,
+            "gradient": false
+        },
+        "gradient": {
+            "linear": true,
+            "radial": false,
+            "color1": "#000000",
+            "color2": "#000000",
+            "rotation": "0"
+        }
+    },
+    "backgroundOptionsHelper": {
+        "colorType": {
+            "single": true,
+            "gradient": false
+        },
+        "gradient": {
+            "linear": true,
+            "radial": false,
+            "color1": "#ffffff",
+            "color2": "#ffffff",
+            "rotation": "0"
+        }
+    }
+}

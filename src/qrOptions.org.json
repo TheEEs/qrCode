@@ -1,0 +1,94 @@
+{
+    "width": 500,
+    "height": 500,
+    "margin": 0,
+    "type": "canvas",
+    "qrOptions": {
+        "typeNumber": "0",
+        "mode": "Byte",
+        "errorCorrectionLevel": "H"
+    },
+    "imageOptions": {
+        "hideBackgroundDots": true,
+        "imageSize": 0.4,
+        "margin": 3
+    },
+    "dotsOptions": {
+        "type": "square",
+        "color": "#ff8847",
+        "gradient": {
+            "type": "linear",
+            "rotation": 0,
+            "colorStops": [{
+                "offset": 0,
+                "color": "#dd3636"
+            }, {
+                "offset": 1,
+                "color": "#f0bc00"
+            }]
+        }
+    },
+    "backgroundOptions": {
+        "color": "#ffffff"
+    },
+    "dotsOptionsHelper": {
+        "colorType": {
+            "single": true,
+            "gradient": false
+        },
+        "gradient": {
+            "linear": true,
+            "radial": false,
+            "color1": "#6a1a4c",
+            "color2": "#6a1a4c",
+            "rotation": "0"
+        }
+    },
+    "cornersSquareOptions": {
+        "type": "square",
+        "color": "#da792b"
+    },
+    "cornersSquareOptionsHelper": {
+        "colorType": {
+            "single": true,
+            "gradient": false
+        },
+        "gradient": {
+            "linear": true,
+            "radial": false,
+            "color1": "#000000",
+            "color2": "#000000",
+            "rotation": "0"
+        }
+    },
+    "cornersDotOptions": {
+        "type": "",
+        "color": "#fedc62"
+    },
+    "cornersDotOptionsHelper": {
+        "colorType": {
+            "single": true,
+            "gradient": false
+        },
+        "gradient": {
+            "linear": true,
+            "radial": false,
+            "color1": "#000000",
+            "color2": "#000000",
+            "rotation": "0"
+        }
+    },
+    "backgroundOptionsHelper": {
+        "colorType": {
+            "single": true,
+            "gradient": false
+        },
+        "gradient": {
+            "linear": true,
+            "radial": false,
+            "color1": "#ffffff",
+            "color2": "#ffffff",
+            "rotation": "0"
+        }
+    }
+}
