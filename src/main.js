@@ -10,11 +10,11 @@ import HomeView from './components/HomeView'
 import ScanView from './components/ScanView'
 import {
     createRouter,
-    createWebHistory
+    createWebHashHistory,
 } from 'vue-router'
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: [{
             path: '/gen',
             component: GenerateView
