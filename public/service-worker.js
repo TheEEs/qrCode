@@ -20,21 +20,18 @@ self.addEventListener("activate", e => {
     )
 })
 
+const ACCEPTED_CACHE_TYPES = ['image', 'script']
 
-
-self.addEventListener("fetch", event => {
-    const request = event.request;
+self.addEventListener("fetch", (event) => {
+    const request = new Request(event.request.url, { mode: "cors" })
     console.log(request)
-    event.respondWith(
-        caches.match(request).then((cached_result) => {
-            if (cached_result) return cached_result;
-            return fetch(request).then(response => {
-                const copy = response.clone()
-                event.waitUntil(caches.open(CACHE_VERSION).then(cache => {
-                    return cache.put(request, copy);
-                }))
+    //if (ACCEPTED_CACHE_TYPES.includes(event.destination))
+    event.respondWith(caches.open(CACHE_VERSION).then(cache => {
+        return cache.match(request).then(cached_response => {
+            return cached_response || fetch(request).then((response) => {
+                event.waitUntil(cache.put(request, response.clone()))
                 return response;
             })
         })
-    )
+    }))
 })
