@@ -4,6 +4,7 @@ import {
 import App from './App.vue'
 import './assets/tailwind.css'
 import 'remixicon/fonts/remixicon.css'
+import 'animate.css'
 
 import GenerateView from './components/GenerateView'
 import HomeView from './components/HomeView'
@@ -16,17 +17,17 @@ import {
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [{
-            path: '/gen',
-            component: GenerateView
-        },
-        {
-            path: '/',
-            component: HomeView
-        },
-        {
-            path: '/scan',
-            component: ScanView
-        }
+        path: '/gen',
+        component: GenerateView
+    },
+    {
+        path: '/',
+        component: HomeView
+    },
+    {
+        path: '/scan',
+        component: ScanView
+    }
     ]
 })
 
@@ -34,9 +35,8 @@ const app = createApp(App)
 app.use(router)
 app.mount('#app')
 
-
+/*
 if ('serviceWorker' in navigator) {
-    console.log(`${process.env.BASE_URL}service-worker.js`);
     navigator.serviceWorker.register(`${process.env.BASE_URL}service-worker.js`, {
         scope: '/'
     }).then((registration) => {
@@ -51,3 +51,4 @@ if ('serviceWorker' in navigator) {
         console.error(`Service worker installation was cancelled due to error: ${e}`);
     })
 }
+*/

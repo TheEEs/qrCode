@@ -83,12 +83,12 @@ div#code>canvas {
 </style>
 <script setup>
 import QRCodeStyling from "qr-code-styling";
-import { onMounted, onUnmounted } from "vue";
-import { ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 
 const quochuy = require("@/assets/quochuy.png");
 const qrOptions = require("@/qrOptions.json");
 const qrData = ref("https://qlvb.hpnet.vn");
+
 
 const qrCode = new QRCodeStyling({
   ...qrOptions,
@@ -103,16 +103,17 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
+  watch(qrData, () => {
+    qrCode.update({
+      data: qrData.value || "https://qlvb.hpnet.vn",
+    });
+  });
   setTimeout(() => {
     const oldCanvases = document.querySelectorAll("div#code canvas");
     oldCanvases.forEach(canvas => canvas.remove())
-    qrCode.append(document.getElementById("code"));
-    watch(qrData, () => {
-      qrCode.update({
-        data: qrData.value || "https://qlvb.hpnet.vn",
-      });
-    });
-  }, 0);
+    qrCode.append(document.querySelector("#code"));
+  }, 1500);
+
 });
 
 async function share() {
