@@ -25,11 +25,10 @@ const ACCEPTED_CACHE_TYPES = ['image', 'script']
 self.addEventListener("fetch", (event) => {
     const request = new Request(event.request.url, { mode: "cors" })
     console.log(request)
-    //if (ACCEPTED_CACHE_TYPES.includes(event.destination))
     event.respondWith(caches.open(CACHE_VERSION).then(cache => {
         return cache.match(request).then(cached_response => {
             return cached_response || fetch(request).then((response) => {
-                event.waitUntil(cache.put(request, response.clone()))
+                cache.put(request, response.clone())
                 return response;
             })
         })

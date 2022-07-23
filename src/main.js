@@ -35,7 +35,7 @@ const app = createApp(App)
 app.use(router)
 app.mount('#app')
 
-/*
+
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(`${process.env.BASE_URL}service-worker.js`, {
         scope: '/'
@@ -51,4 +51,3 @@ if ('serviceWorker' in navigator) {
         console.error(`Service worker installation was cancelled due to error: ${e}`);
     })
 }
-*/
