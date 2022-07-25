@@ -17,24 +17,19 @@ import {
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [{
-        path: '/gen',
-        component: GenerateView
-    },
-    {
-        path: '/',
-        component: HomeView
-    },
-    {
-        path: '/scan',
-        component: ScanView
-    }
+            path: '/gen',
+            component: GenerateView
+        },
+        {
+            path: '/',
+            component: HomeView
+        },
+        {
+            path: '/scan',
+            component: ScanView
+        }
     ]
 })
-
-const app = createApp(App)
-app.use(router)
-app.mount('#app')
-
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(`${process.env.BASE_URL}service-worker.js`, {
@@ -51,3 +46,32 @@ if ('serviceWorker' in navigator) {
         console.error(`Service worker installation was cancelled due to error: ${e}`);
     })
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    let installButton = document.getElementById("install-app")
+    window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        installButton.classList.remove('hidden')
+        installButton.classList.add('flex')
+        console.log("HEHEHE")
+        let deferredPrompt = e;
+        installButton.addEventListener("click", () => {
+            console.log("HEHE")
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((result) => {
+                if (result.outcome === 'accepted') {
+                    console.log("User accepted to install the app");
+                } else {
+                    console.log("User denied to install the app");
+                }
+                installButton.classList.remove('flex')
+                installButton.classList.add('hidden')
+            })
+        })
+    })
+})
+
+
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
