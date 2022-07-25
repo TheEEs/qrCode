@@ -1,0 +1,13 @@
+{
+    "background-color": "#facc15",
+    "description": "Phần mềm tạo và quét mã QR - Văn phòng HĐND và UBND huyện Thủy Nguyên",
+    "display": "standalone",
+    "icons": [{
+        "src": "/logo.png",
+        "size": "500x500",
+        "type":"image/png"
+    }],
+    "name":"QRCode - phần mềm quét và tạo QRCode",
+    "short_name":"QRCode",
+    "start_url": "/index.html"
+}
