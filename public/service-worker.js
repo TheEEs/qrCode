@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 
 self.addEventListener("install", (e) => {
     console.log("Service worker's installing");

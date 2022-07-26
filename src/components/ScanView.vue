@@ -18,7 +18,7 @@
       ></router-link>
       Văn phòng HĐND và UBND huyện Thủy Nguyên
     </div>
-    <section id="video" class="w-4/5 sm:max-w-xs">
+    <section id="video" class="w-4/5 sm:max-w-lg">
       <p
         class="
           text-sm
@@ -86,12 +86,14 @@
         <label
           for="image"
           class="
+            mx-auto
             flex
             items-center
             justify-center
             gap-x-1
             bg-amber-400
             w-full
+            sm:max-w-md
             text-white
             py-2
             truncate
