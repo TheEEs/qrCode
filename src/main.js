@@ -64,9 +64,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     console.log("User denied to install the app");
                 }
-                installButton.classList.remove('flex')
-                installButton.classList.add('hidden')
             })
+            installButton.classList.remove('flex')
+            installButton.classList.add('hidden')
         })
     })
 })
