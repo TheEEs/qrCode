@@ -5,7 +5,7 @@
     class="
       flex
       mx-auto
-      justify-center
+      justify-start
       items-center
       cursor-pointer
       text-sky-500
