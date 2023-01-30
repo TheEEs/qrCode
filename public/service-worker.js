@@ -24,7 +24,12 @@ const ACCEPTED_CACHE_TYPES = ['image', 'script']
 
 self.addEventListener("fetch", (event) => {
     const request = new Request(event.request.url, { mode: "cors" })
-    console.log(request)
+    if (event.request.url.includes("#/folders/")){
+        event.respondWith(
+            fetch(request)
+        ); 
+        return;
+    }
     event.respondWith(caches.open(CACHE_VERSION).then(cache => {
         return cache.match(request).then(cached_response => {
             return cached_response || fetch(request).then((response) => {
