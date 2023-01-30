@@ -58,7 +58,7 @@ const router = createRouter({
     ]
 })
 
-/*
+
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(`${process.env.BASE_URL}service-worker.js`, {
         scope: '/'
@@ -74,7 +74,7 @@ if ('serviceWorker' in navigator) {
         console.error(`Service worker installation was cancelled due to error: ${e}`);
     })
 }
-*/
+
 
 document.addEventListener("DOMContentLoaded", function () {
     let installButton = document.getElementById("install-app")
