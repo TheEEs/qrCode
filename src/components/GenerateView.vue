@@ -84,11 +84,12 @@ div#code>canvas {
 <script setup>
 import QRCodeStyling from "qr-code-styling";
 import { onMounted, onUnmounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 const quochuy = require("@/assets/quochuy.png");
 const qrOptions = require("@/qrOptions.json");
 const qrData = ref("https://qlvb.hpnet.vn");
-
+const route = useRoute()
 
 const qrCode = new QRCodeStyling({
   ...qrOptions,
@@ -108,6 +109,8 @@ onMounted(() => {
       data: qrData.value || "https://qlvb.hpnet.vn",
     });
   });
+  if (route.query.data)
+    qrData.value = route.query.data;
   setTimeout(() => {
     const oldCanvases = document.querySelectorAll("div#code canvas");
     oldCanvases.forEach(canvas => canvas.remove())

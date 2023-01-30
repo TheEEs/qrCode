@@ -9,6 +9,8 @@ import 'animate.css'
 import GenerateView from './components/GenerateView'
 import HomeView from './components/HomeView'
 import ScanView from './components/ScanView'
+import FileUpLoadView from './components/FileUploadView';
+import FoldersView from "./components/FoldersView.vue";
 import {
     createRouter,
     createWebHashHistory,
@@ -17,20 +19,46 @@ import {
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [{
-            path: '/gen',
-            component: GenerateView
-        },
-        {
-            path: '/',
-            component: HomeView
-        },
-        {
-            path: '/scan',
-            component: ScanView
+        path: '/gen',
+        component: GenerateView,
+        meta: {
+
         }
+    },
+    {
+        path: '/',
+        component: HomeView,
+        meta: {
+
+        }
+    },
+    {
+        path: '/scan',
+        component: ScanView,
+        meta: {
+
+        }
+    },
+    {
+        path: '/file_sharing',
+        component: FileUpLoadView,
+        meta: {
+            transition_in: "animate__bounceIn",
+            transition_out: "animate__bounceOut"
+        }
+    },
+    {
+        path: '/folders/:id',
+        component: FoldersView,
+        meta: {
+            transition_in: "animate__bounceIn",
+            transition_out: "animate__bounceOut"
+        }
+    }
     ]
 })
 
+/*
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(`${process.env.BASE_URL}service-worker.js`, {
         scope: '/'
@@ -46,6 +74,7 @@ if ('serviceWorker' in navigator) {
         console.error(`Service worker installation was cancelled due to error: ${e}`);
     })
 }
+*/
 
 document.addEventListener("DOMContentLoaded", function () {
     let installButton = document.getElementById("install-app")

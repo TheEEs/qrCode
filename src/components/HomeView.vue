@@ -42,10 +42,23 @@
           justify-center
         "><i class="ri-qr-scan-line mr-1 text-amber-300"></i>Quét mã
         QR</router-link>
+      <router-link  to="/file_sharing" class="
+          mx-auto
+          w-full
+          sm:w-3/4
+          mt-4
+          text-center
+          hover:bg-violet-100
+          py-4
+          text-violet-600
+          border-2 border-violet-500
+          flex
+          items-center
+          justify-center
+        "><i class="ri-send-plane-line mr-1 text-violet-300"></i>Chia sẻ tài liệu</router-link>
     </section>
   </div>
 </template>
 
 <script setup>
-
 </script>
