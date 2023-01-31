@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-screen flex flex-wrap justify-center items-center">
     <section id="buttons" class="w-3/4 sm:max-w-sm">
-      <img id="code" src="@/assets/quochuy.png" class="w-28 mx-auto" />
+      <img id="code" src="../assets/quochuy.png" class="w-28 mx-auto" />
       <p class="
           font-sans
           text-center text-sm

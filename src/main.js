@@ -6,10 +6,10 @@ import './assets/tailwind.css'
 import 'remixicon/fonts/remixicon.css'
 import 'animate.css'
 
-import GenerateView from './components/GenerateView'
-import HomeView from './components/HomeView'
-import ScanView from './components/ScanView'
-import FileUpLoadView from './components/FileUploadView';
+import GenerateView from "./components/GenerateView.vue";
+import HomeView from './components/HomeView.vue';
+import ScanView from './components/ScanView.vue';
+import FileUpLoadView from './components/FileUploadView.vue';
 import FoldersView from "./components/FoldersView.vue";
 import {
     createRouter,
@@ -60,8 +60,9 @@ const router = createRouter({
 
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(`${process.env.BASE_URL}service-worker.js`, {
-        scope: '/'
+    navigator.serviceWorker.register(new URL('./service-worker.js', import.meta.url), {
+        type: 'module',
+        scope: "/"
     }).then((registration) => {
         if (registration.installing) {
             console.log("Service worker is installing");

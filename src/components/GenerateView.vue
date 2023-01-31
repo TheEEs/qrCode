@@ -15,7 +15,7 @@
       Văn phòng HĐND và UBND huyện Thủy Nguyên
     </div>
     <section id="main" class="w-full text-center">
-      <div id="code" class="w-3/4 md:max-w-xs mx-auto flex justify-center"></div>
+      <div id="code" class="w-3/4 sm:max-w-xs mx-auto flex justify-center"></div>
       <div class="w-1/2 mx-auto">
         <p class="
             mt-1
@@ -85,9 +85,10 @@ div#code>canvas {
 import QRCodeStyling from "qr-code-styling";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import qrOptions from "../qrOptions.json";
+import quochuy from "../assets/quochuy.png";
 
-const quochuy = require("@/assets/quochuy.png");
-const qrOptions = require("@/qrOptions.json");
+
 const qrData = ref("https://qlvb.hpnet.vn");
 const route = useRoute()
 

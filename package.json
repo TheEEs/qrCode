@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "npx parcel src/index.html",
+    "build": "npx parcel build src/index.html"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
@@ -25,6 +24,10 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@parcel/packager-raw-url": "^2.8.3",
+    "@parcel/service-worker": "^2.8.3",
+    "@parcel/transformer-vue": "^2.8.3",
+    "@parcel/transformer-webmanifest": "^2.8.3",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",

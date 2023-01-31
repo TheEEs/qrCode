@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=5">
+  <link rel="icon" href="./assets/quochuy.png">
+  <link rel="apple-touch-icon" href="./assets/quochuy.png">
+  <link rel="apple-touch-startup-image" href="./assets/quochuy.png">
+  <meta name="apple-mobile-web-app-title" content="QR Code">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="../public/manifest.webmanifest">
+  <title>QRCode - tạo và quét mã QR</title>
+  <script type="module" src="./main.js"></script>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
+  </noscript>
+  <button id="install-app"
+    class="fixed hidden right-0 bottom-0 rounded-md text-white bg-red-400 border-b-red-200 items-center px-2 mr-4 mb-4 border-b-2  font-open-sans text-sm py-1">
+    <i class="ri-install-line text-lg px-1 text-red-200"></i> Cài đặt ứng dụng</button>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
