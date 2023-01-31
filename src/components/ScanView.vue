@@ -111,7 +111,7 @@
 import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import QRScanner from "qr-scanner";
 import QrScanner from "qr-scanner";
-import ScanValueLabel from "@/components/supports/QrScanData.vue";
+import ScanValueLabel from "./supports/QrScanData.vue";
 
 const cameraList = reactive([]);
 const cameraUsable = ref(true);

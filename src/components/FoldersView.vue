@@ -38,7 +38,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { databases, storage } from '@/client';
+import { databases, storage } from '../client';
 import Swal from "sweetalert2";
 
 const route = useRoute();

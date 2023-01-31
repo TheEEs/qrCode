@@ -39,7 +39,7 @@ import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css"
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { storage, databases } from "@/client";
+import { storage, databases } from "../client";
 import { ID, Permission, Role } from 'appwrite';
 import ProgressBar from "./supports/ProgressBar.vue";
 
