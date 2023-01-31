@@ -30,6 +30,8 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "gitmoji-cli": "^7.0.3",
+    "parcel": "^2.8.3",
     "vue-cli-plugin-tailwind": "~3.0.0"
   },
   "eslintConfig": {
