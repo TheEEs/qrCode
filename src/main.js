@@ -83,10 +83,8 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         installButton.classList.remove('hidden')
         installButton.classList.add('flex')
-        console.log("HEHEHE")
         let deferredPrompt = e;
         installButton.addEventListener("click", () => {
-            console.log("HEHE")
             deferredPrompt.prompt();
             deferredPrompt.userChoice.then((result) => {
                 if (result.outcome === 'accepted') {

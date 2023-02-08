@@ -91,6 +91,7 @@ import quochuy from "../assets/quochuy.png";
 
 const qrData = ref("https://qlvb.hpnet.vn");
 const route = useRoute()
+let width = 0;
 
 const qrCode = new QRCodeStyling({
   ...qrOptions,
@@ -99,34 +100,36 @@ const qrCode = new QRCodeStyling({
   type: "svg"
 });
 
+function updateQrCode() {
+  qrCode.update({
+    data: qrData.value || "https://qlvb.hpnet.vn",
+    width
+  })
+}
+
+function updateQrCodeWidth() {
+  width = document.querySelector("div#code").offsetWidth;
+}
+
 onUnmounted(() => {
-  document.querySelectorAll("#code *").forEach((node) => {
-    document.getElementById("code").removeChild(node);
-  });
+  [updateQrCode, updateQrCodeWidth].forEach(cb => {
+    window.removeEventListener("resize", cb, true);
+  })
 });
 
 onMounted(() => {
-
+  width = document.querySelector("div#code").offsetWidth;
+  window.addEventListener("resize", updateQrCodeWidth);
   watch(qrData, () => {
-    const width = document.querySelector("div#code").offsetWidth;
-    qrCode.update({
-      data: qrData.value || "https://qlvb.hpnet.vn",
-      width
-    });
+    updateQrCode();
   });
   if (route.query.data)
     qrData.value = route.query.data;
-  setTimeout(() => {
-    const oldCanvases = document.querySelectorAll("div#code canvas");
-    oldCanvases.forEach(canvas => canvas.remove())
-    qrCode.append(document.querySelector("#code"));
-    const width = document.querySelector("div#code").offsetWidth;
-    qrCode.update({
-      data: qrData.value || "https://qlvb.hpnet.vn",
-      width
-    })
-  }, 1500);
-
+  const oldCanvases = document.querySelectorAll("div#code canvas");
+  oldCanvases.forEach(canvas => canvas.remove())
+  qrCode.append(document.querySelector("#code"));
+  updateQrCode();
+  window.addEventListener("resize", updateQrCode);
 });
 
 async function share() {
