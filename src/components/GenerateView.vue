@@ -123,7 +123,7 @@ onMounted(() => {
     const width = document.querySelector("div#code").offsetWidth;
     qrCode.update({
       data: qrData.value || "https://qlvb.hpnet.vn",
-            width
+      width
     })
   }, 1500);
 
