@@ -96,6 +96,7 @@ const qrCode = new QRCodeStyling({
   ...qrOptions,
   image: quochuy,
   data: qrData.value,
+  type: "svg"
 });
 
 onUnmounted(() => {
@@ -105,9 +106,12 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
+
   watch(qrData, () => {
+    const width = document.querySelector("div#code").offsetWidth;
     qrCode.update({
       data: qrData.value || "https://qlvb.hpnet.vn",
+      width
     });
   });
   if (route.query.data)
@@ -116,6 +120,11 @@ onMounted(() => {
     const oldCanvases = document.querySelectorAll("div#code canvas");
     oldCanvases.forEach(canvas => canvas.remove())
     qrCode.append(document.querySelector("#code"));
+    const width = document.querySelector("div#code").offsetWidth;
+    qrCode.update({
+      data: qrData.value || "https://qlvb.hpnet.vn",
+            width
+    })
   }, 1500);
 
 });
