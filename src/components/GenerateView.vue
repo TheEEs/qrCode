@@ -142,6 +142,7 @@ onMounted(() => {
 async function share() {
   if (navigator.share) {
     const qrCode = generateQRCode();
+    qrCode.getRawData("png");
     const blob = await qrCode.getRawData("png");
     console.log(blob);
     const imageFile = new File([blob], "qrCode.png", {
@@ -163,6 +164,7 @@ async function share() {
 
 async function download() {
   const qrCode = generateQRCode();
+  qrCode.getRawData("png");
   await qrCode.download({
     name: "qrCode",
     extension: "png",
