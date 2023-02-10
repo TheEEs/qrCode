@@ -77,9 +77,7 @@
   </div>
 </template>
 <style>
-div#code>canvas {
-  width: 100%;
-}
+
 </style>
 <script setup>
 import QRCodeStyling from "qr-code-styling";
@@ -92,24 +90,32 @@ import quochuy from "../assets/quochuy.png";
 const qrData = ref("https://qlvb.hpnet.vn");
 const route = useRoute()
 let width = 0;
+let interval = 0;
 
-const qrCode = new QRCodeStyling({
-  ...qrOptions,
-  image: quochuy,
-  data: qrData.value,
-  type: "svg"
-});
+function generateQRCode() {
+  return new QRCodeStyling({
+    ...qrOptions,
+    image: quochuy,
+    data: qrData.value,
+    type: "svg"
+  });
+}
+
+const qrCode = generateQRCode();
 
 function updateQrCode() {
   qrCode.update({
     data: qrData.value || "https://qlvb.hpnet.vn",
-    width
+    width,
+    type: "svg",
   })
 }
+
 
 function updateQrCodeWidth() {
   width = document.querySelector("div#code").offsetWidth;
 }
+
 
 onUnmounted(() => {
   [updateQrCode, updateQrCodeWidth].forEach(cb => {
@@ -118,23 +124,25 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
-  width = document.querySelector("div#code").offsetWidth;
-  window.addEventListener("resize", updateQrCodeWidth);
-  watch(qrData, () => {
+  setTimeout(() => {
+    window.addEventListener("resize", updateQrCodeWidth);
+    watch(qrData, () => {
+      updateQrCode();
+    });
+    if (route.query.data)
+      qrData.value = route.query.data;
+    updateQrCodeWidth();
     updateQrCode();
-  });
-  if (route.query.data)
-    qrData.value = route.query.data;
-  const oldCanvases = document.querySelectorAll("div#code canvas");
-  oldCanvases.forEach(canvas => canvas.remove())
-  qrCode.append(document.querySelector("#code"));
-  updateQrCode();
-  window.addEventListener("resize", updateQrCode);
+    qrCode.append(document.querySelector("#code"));
+  }, 500);
 });
 
 async function share() {
   if (navigator.share) {
-    const imageFile = new File([await qrCode.getRawData()], "qrCode.png", {
+    const qrCode = generateQRCode();
+    const blob = await qrCode.getRawData("png");
+    console.log(blob);
+    const imageFile = new File([blob], "qrCode.png", {
       type: "image/png",
     });
     navigator
@@ -152,7 +160,8 @@ async function share() {
 }
 
 async function download() {
-  qrCode.download({
+  const qrCode = generateQRCode();
+  await qrCode.download({
     name: "qrCode",
     extension: "png",
   });
