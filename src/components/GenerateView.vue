@@ -118,12 +118,14 @@ function updateQrCodeWidth() {
 
 
 onUnmounted(() => {
+  document.querySelector('#code svg').remove();
   [updateQrCode, updateQrCodeWidth].forEach(cb => {
     window.removeEventListener("resize", cb, true);
   })
 });
 
 onMounted(() => {
+
   setTimeout(() => {
     window.addEventListener("resize", updateQrCodeWidth);
     watch(qrData, () => {
