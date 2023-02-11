@@ -71,14 +71,53 @@
           ">
           <i class="ri-file-download-line text-lg pr-2 text-amber-400"></i>
           Tải về mã QR
-      </button>
-      <a class="hidden" href="https://google.com" ref="download_link"></a>
+        </button>
+        <a class="hidden" href="https://google.com" ref="download_link"></a>
       </div>
     </section>
   </div>
+  <div v-if="show_loader" id="loader" class="w-full bg-opacity-70 h-screen bg-slate-700 fixed flex-wrap flex justify-center items-center z-10 top-0">
+    <div class="text-center">
+      <span class="loader"></span>
+      <p class="text-white font-semibold mt-2">Đang tạo ảnh...</p>
+    </div>
+  </div>
 </template>
 <style>
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
 
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-bottom-color: #FF3D00;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>
 <script setup>
 import QRCodeStyling from "qr-code-styling";
@@ -93,6 +132,7 @@ const route = useRoute()
 let width = 0;
 let interval = 0;
 const download_link = ref(null);
+const show_loader = ref(false);
 
 
 function generateQRCode() {
@@ -144,6 +184,7 @@ onMounted(() => {
 
 async function share() {
   if (navigator.share) {
+    show_loader.value = true;
     const canvas = await html2canvas(document.querySelector("div#code"));
     const promise = new Promise((y) => {
       canvas.toBlob(y);
@@ -163,16 +204,19 @@ async function share() {
       .catch(() => {
         console.error("Không thể chia sẻ");
       });
+      show_loader.value = false;
   }
 }
 
 async function download(e) {
   e.preventDefault();
+  show_loader.value = true;
   const a = download_link.value;
   const canvas = await html2canvas(document.querySelector("div#code"));
   const dataURL = canvas.toDataURL();
   a.download = "qrCode.png";
   a.href = dataURL;
   a.click();
+  show_loader.value = false;
 }
 </script>
