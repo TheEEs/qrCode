@@ -1,6 +1,7 @@
 <template>
-  <div class="w-full h-screen justify-center items-center flex flex-wrap">
-    <div class="
+  <div>
+    <div class="w-full h-screen justify-center items-center flex flex-wrap">
+      <div class="
         top-0
         w-full
         absolute
@@ -11,13 +12,13 @@
         text-xs text-white
         pl-4
       ">
-      <router-link to="/"><i class="ri-arrow-left-line text-lg mr-2"></i></router-link>
-      Văn phòng HĐND và UBND huyện Thủy Nguyên
-    </div>
-    <section id="main" class="w-full text-center">
-      <div id="code" class="w-3/4 sm:max-w-xs mx-auto flex justify-center"></div>
-      <div class="w-1/2 mx-auto">
-        <p class="
+        <router-link to="/"><i class="ri-arrow-left-line text-lg mr-2"></i></router-link>
+        Văn phòng HĐND và UBND huyện Thủy Nguyên
+      </div>
+      <section id="main" class="w-full text-center">
+        <div id="code" class="w-3/4 sm:max-w-xs mx-auto flex justify-center"></div>
+        <div class="w-1/2 mx-auto">
+          <p class="
             mt-1
             max-w-full
             truncate
@@ -30,11 +31,11 @@
             inline-block
             rounded-full
           ">
-          {{ qrData || "https://qlvb.hpnet.vn" }}
-        </p>
-      </div>
+            {{ qrData || "https://qlvb.hpnet.vn" }}
+          </p>
+        </div>
 
-      <div id="input" class="
+        <div id="input" class="
           w-full
           font-sans
           text-sm
@@ -43,11 +44,11 @@
           gap-y-3
           mt-10
         ">
-        <input type="text" placeholder="Liên kết, số điện thoại, email ...v.v.."
-          class="w-4/5 px-3 py-2 border-2 border-sky-300 sm:max-w-xs mb-5" name="" v-model="qrData" id="" />
-      </div>
-      <div id="actions" class="flex justify-center gap-x-2">
-        <button @click="share" class="
+          <input type="text" placeholder="Liên kết, số điện thoại, email ...v.v.."
+            class="w-4/5 px-3 py-2 border-2 border-sky-300 sm:max-w-xs mb-5" name="" v-model="qrData" id="" />
+        </div>
+        <div id="actions" class="flex justify-center gap-x-2">
+          <button @click="share" class="
             px-3
             text-sm
             rounded-md
@@ -57,9 +58,9 @@
             text-sky-700
             bg-sky-200
           ">
-          <i class="ri-share-line text-lg pr-2 text-blue-400"></i> Chia sẻ mã QR
-        </button>
-        <button @click="download" class="
+            <i class="ri-share-line text-lg pr-2 text-blue-400"></i> Chia sẻ mã QR
+          </button>
+          <button @click="download" class="
             px-3
             text-sm
             rounded-md
@@ -69,18 +70,20 @@
             text-amber-700
             bg-yellow-200
           ">
-          <i class="ri-file-download-line text-lg pr-2 text-amber-400"></i>
-          Tải về mã QR
-        </button>
-        <a class="hidden" href="https://google.com" ref="download_link"></a>
-      </div>
-    </section>
-  </div>
-  <div v-if="show_loader" id="loader" class="w-full bg-opacity-70 h-screen bg-slate-700 fixed flex-wrap flex justify-center items-center z-10 top-0">
-    <div class="text-center">
-      <span class="loader"></span>
-      <p class="text-white font-semibold mt-2">Đang tạo ảnh...</p>
+            <i class="ri-file-download-line text-lg pr-2 text-amber-400"></i>
+            Tải về mã QR
+          </button>
+          <a class="hidden" href="https://google.com" ref="download_link"></a>
+        </div>
+      </section>
     </div>
+      <div v-if="show_loader" id="loader"
+        class="w-full bg-opacity-70 h-screen bg-slate-700 fixed flex-wrap flex justify-center items-center z-10 top-0">
+        <div class="text-center">
+          <span class="loader"></span>
+          <p class="text-white font-semibold mt-2">Đang tạo ảnh...</p>
+        </div>
+      </div>
   </div>
 </template>
 <style>
@@ -161,10 +164,12 @@ function updateQrCodeWidth() {
 
 
 onUnmounted(() => {
-  document.querySelector('#code svg').remove();
-  [updateQrCode, updateQrCodeWidth].forEach(cb => {
-    window.removeEventListener("resize", cb, true);
-  })
+  try {
+    document.querySelector('#code svg').remove();
+    [updateQrCode, updateQrCodeWidth].forEach(cb => {
+      window.removeEventListener("resize", cb, true);
+    })
+  } catch { }
 });
 
 onMounted(() => {
@@ -204,7 +209,7 @@ async function share() {
       .catch(() => {
         console.error("Không thể chia sẻ");
       });
-      show_loader.value = false;
+    show_loader.value = false;
   }
 }
 
