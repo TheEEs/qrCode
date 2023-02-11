@@ -71,7 +71,8 @@
           ">
           <i class="ri-file-download-line text-lg pr-2 text-amber-400"></i>
           Tải về mã QR
-        </button>
+      </button>
+      <a class="hidden" href="https://google.com" ref="download_link"></a>
       </div>
     </section>
   </div>
@@ -85,12 +86,14 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import qrOptions from "../qrOptions.json";
 import quochuy from "../assets/quochuy.png";
-
+import html2canvas from "html2canvas";
 
 const qrData = ref("https://qlvb.hpnet.vn");
 const route = useRoute()
 let width = 0;
 let interval = 0;
+const download_link = ref(null);
+
 
 function generateQRCode() {
   return new QRCodeStyling({
@@ -141,10 +144,11 @@ onMounted(() => {
 
 async function share() {
   if (navigator.share) {
-    const qrCode = generateQRCode();
-    qrCode.getRawData("png");
-    const blob = await qrCode.getRawData("png");
-    console.log(blob);
+    const canvas = await html2canvas(document.querySelector("div#code"));
+    const promise = new Promise((y) => {
+      canvas.toBlob(y);
+    })
+    const blob = await promise;
     const imageFile = new File([blob], "qrCode.png", {
       type: "image/png",
     });
@@ -162,12 +166,13 @@ async function share() {
   }
 }
 
-async function download() {
-  const qrCode = generateQRCode();
-  qrCode.getRawData("png");
-  await qrCode.download({
-    name: "qrCode",
-    extension: "png",
-  });
+async function download(e) {
+  e.preventDefault();
+  const a = download_link.value;
+  const canvas = await html2canvas(document.querySelector("div#code"));
+  const dataURL = canvas.toDataURL();
+  a.download = "qrCode.png";
+  a.href = dataURL;
+  a.click();
 }
 </script>
