@@ -144,6 +144,8 @@ function generateQRCode() {
     ...qrOptions,
     image: quochuy,
     data: qrData.value,
+    width,
+    height: width,
     type: "canvas"
   });
 }
