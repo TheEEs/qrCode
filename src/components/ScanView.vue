@@ -1,7 +1,6 @@
 <template>
   <div class="w-full h-screen flex flex-wrap justify-center items-center">
-    <div
-      class="
+    <div class="
         top-0
         w-full
         absolute
@@ -11,16 +10,12 @@
         bg-amber-500
         text-xs text-white
         pl-4
-      "
-    >
-      <router-link to="/"
-        ><i class="ri-arrow-left-line text-lg mr-2"></i
-      ></router-link>
+      ">
+      <router-link to="/"><i class="ri-arrow-left-line text-lg mr-2"></i></router-link>
       Văn phòng HĐND và UBND huyện Thủy Nguyên
     </div>
     <section id="video" class="w-4/5 sm:max-w-lg">
-      <p
-        class="
+      <p class="
           text-sm
           font-mono
           px-3
@@ -30,62 +25,28 @@
           bg-slate-300
           text-slate-700
           inline-block
-        "
-      >
+        ">
         {{ status }}
       </p>
-      <video
-        id="webcam"
-        class="border-2 w-full border-gray-600"
-        v-show="cameraUsable"
-      ></video>
-      <img
-        :src="backgroundImageURL"
-        v-if="!cameraUsable"
-        id="selectedCamera"
-        class="w-full max-w-full min-h-full"
-        alt=""
-      />
-      <div
-        id="cameraSelection"
-        class="flex items-baseline mt-3"
-        v-if="cameraUsable"
-      >
-        <label class="text-xs text-gray-400" for="camera"
-          >Lựa chọn camera</label
-        >
-        <select
-          v-if="cameraUsable"
-          v-model="selectedCamera"
-          id="camera"
-          name="camera"
-          class="ml-3 grow bg-blue-200 rounded-sm inline"
-        >
-          <option
-            class="text-sm font-open-sans bg-white"
-            :value="c.id"
-            v-for="c in cameraList"
-            :key="c.id"
-          >
+      <video id="webcam" class="border-2 w-full border-gray-600" v-show="cameraUsable"></video>
+      <video id="screenStream" class="border-2 w-full border-gray-600" v-show="isSreenCapturing"></video>
+      <img :src="backgroundImageURL" v-if="!cameraUsable" id="selectedCamera" class="w-full max-w-full min-h-full"
+        alt="" />
+      <div id="cameraSelection" class="flex items-baseline mt-3" v-if="cameraUsable">
+        <label class="text-xs text-gray-400" for="camera">Lựa chọn camera</label>
+        <select v-if="cameraUsable" v-model="selectedCamera" id="camera" name="camera"
+          class="ml-3 grow bg-blue-200 rounded-sm inline">
+          <option class="text-sm font-open-sans bg-white" :value="c.id" v-for="c in cameraList" :key="c.id">
             {{ c.label }}
           </option>
         </select>
       </div>
-      <section id="scanValue" class="w-full text-center font-mono mt-8">
+      <section id="" class="w-full text-center font-mono mt-8">
         <ScanValueLabel :value="scanValue"></ScanValueLabel>
       </section>
-      <section id="scanValue" class="w-full text-center font-open-sans mt-4">
-        <input
-          v-show="false"
-          accept="image/*"
-          type="file"
-          name="image"
-          id="image"
-          @change="changeImage"
-        />
-        <label
-          for="image"
-          class="
+      <section id="" class="w-full text-center font-open-sans mt-4">
+        <input v-show="false" accept="image/*" type="file" name="image" id="image" @change="changeImage" />
+        <label for="image" class="
             mx-auto
             flex
             items-center
@@ -99,9 +60,24 @@
             truncate
             px-3
             rounded-md
-          "
-          ><i class="ri-image-add-line text-lg"></i>Quét từ hình ảnh</label
-        >
+          "><i class="ri-image-add-line text-lg"></i>Quét từ hình ảnh</label>
+      </section>
+      <section id="screenShot" class="w-full text-center font-open-sans mt-4">
+        <label @click="cropFromScreen" for="" class="
+            mx-auto
+            flex
+            items-center
+            justify-center
+            gap-x-1
+            bg-violet-400
+            w-full
+            sm:max-w-md
+            text-white
+            py-2
+            truncate
+            px-3
+            rounded-md
+          "><i class="ri-qr-scan-line"></i>Cắt từ màn hình</label>
       </section>
     </section>
   </div>
@@ -112,6 +88,7 @@ import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import QRScanner from "qr-scanner";
 import QrScanner from "qr-scanner";
 import ScanValueLabel from "./supports/QrScanData.vue";
+import Swal from "sweetalert2";
 
 const cameraList = reactive([]);
 const cameraUsable = ref(true);
@@ -119,6 +96,7 @@ const status = ref("Đang chờ camera ...");
 const selectedCamera = ref("");
 const scanValue = ref("");
 const backgroundImageURL = ref("");
+const isSreenCapturing = ref(false);
 
 var qrScanner;
 
@@ -126,13 +104,13 @@ var qrScanner;
   return `url("${backgroundImageURL.value}")`;
 });*/
 
-async function detectQrFromImage(dataURL) {
+async function detectQrFromImage(source) {
   const options = {
     returnDetailedScanResult: true,
     alsoTryWithoutScanRegion: true,
   };
   try {
-    const result = await QrScanner.scanImage(dataURL, {
+    const result = await QrScanner.scanImage(source, {
       ...options,
     });
     scanValue.value = result.data;
@@ -200,5 +178,32 @@ async function scanFromFile() {
   cameraUsable.value = false;
   await qrScanner.destroy();
   await qrScanner.stop();
+}
+
+async function cropFromScreen() {
+  try {
+    cameraUsable.value = false;
+    let stream = await navigator.mediaDevices.getDisplayMedia({
+      video: true
+    });
+    await qrScanner.stop();
+    await qrScanner.destroy();
+    isSreenCapturing.value = true;
+    const video = document.getElementById("screenStream");
+    video.srcObject = stream;
+    const interval = setInterval(() => detectQrFromImage(video), 500);
+    stream.getVideoTracks()[0].addEventListener("ended", async () => {
+      clearInterval(interval);
+      video.pause();
+    })
+    video.play();
+  }
+  catch (e) {
+    Swal.fire({
+      icon: "error",
+      title: "Hmmm...",
+      text: "Có vẻ tính năng đọc màn hình chưa được hỗ trợ trên thiết bị của bạn"
+    })
+  }
 }
 </script>

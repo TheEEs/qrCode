@@ -129,10 +129,11 @@ import { useRoute } from "vue-router";
 import qrOptions from "../qrOptions.json";
 import quochuy from "../assets/quochuy.png";
 import html2canvas from "html2canvas";
+import Swal from "sweetalert2";
 
 const qrData = ref("https://qlvb.hpnet.vn");
 const route = useRoute()
-let width = 0;
+let width = 400;
 let interval = 0;
 const download_link = ref(null);
 const show_loader = ref(false);
@@ -143,7 +144,7 @@ function generateQRCode() {
     ...qrOptions,
     image: quochuy,
     data: qrData.value,
-    type: "svg"
+    type: "canvas"
   });
 }
 
@@ -153,7 +154,8 @@ function updateQrCode() {
   qrCode.update({
     data: qrData.value || "https://qlvb.hpnet.vn",
     width,
-    type: "svg",
+    height: width,
+    type: "canvas",
   })
 }
 
@@ -190,13 +192,9 @@ onMounted(() => {
 async function share() {
   if (navigator.share) {
     show_loader.value = true;
-    const canvas = await html2canvas(document.querySelector("div#code"));
-    const promise = new Promise((y) => {
-      canvas.toBlob(y);
-    })
-    const blob = await promise;
+    const blob = await qrCode.getRawData("png");
     const imageFile = new File([blob], "qrCode.png", {
-      type: "image/png",
+      type: "image/png"
     });
     navigator
       .share({
@@ -216,12 +214,10 @@ async function share() {
 async function download(e) {
   e.preventDefault();
   show_loader.value = true;
-  const a = download_link.value;
-  const canvas = await html2canvas(document.querySelector("div#code"));
-  const dataURL = canvas.toDataURL();
-  a.download = "qrCode.png";
-  a.href = dataURL;
-  a.click();
+  await qrCode.download({
+    name: "qrCode",
+    extension: "png"
+  })
   show_loader.value = false;
-}
+} 
 </script>
