@@ -169,7 +169,7 @@ function updateQrCodeWidth() {
 
 onUnmounted(() => {
   try {
-    document.querySelector('#code svg').remove();
+    document.querySelector('#code canvas, #code svg').remove();
     [updateQrCode, updateQrCodeWidth].forEach(cb => {
       window.removeEventListener("resize", cb, true);
     })
